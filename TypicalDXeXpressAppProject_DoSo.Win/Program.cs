@@ -29,7 +29,7 @@ namespace TypicalDXeXpressAppProject_DoSo.Win
             Tracing.Initialize();
             TypicalDXeXpressAppProject_DoSoWindowsFormsApplication winApplication = new TypicalDXeXpressAppProject_DoSoWindowsFormsApplication();
 
-            string connectionString = SQLiteConnectionProvider.GetConnectionString("DoSo_SampleXAFApp7.db");
+            string connectionString = SQLiteConnectionProvider.GetConnectionString("DoSo_SampleXAFApp2.db");
             XpoDefault.DataLayer = XpoDefault.GetDataLayer(connectionString, AutoCreateOption.DatabaseAndSchema);
 
             winApplication.SplashScreen = new DevExpress.ExpressApp.Win.Utils.DXSplashScreen("DoSo_Logo.png");

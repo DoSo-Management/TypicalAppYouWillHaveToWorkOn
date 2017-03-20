@@ -15,16 +15,21 @@ using DevExpress.Persistent.Validation;
 namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    
-    public class StockBalance : BaseObject
+    public class StockBalance : XPLiteObjectBase
     { 
         public StockBalance(Session session) : base(session) {}
 
-
+        [Association]
         public StockItem StockItem { get; set; }
 
+        [Association]
         public Customer Customer { get; set; }
 
         public decimal Amount { get; set; }
+
+        private decimal CountAmount() {
+
+            return 0;
+        }
     }
 }

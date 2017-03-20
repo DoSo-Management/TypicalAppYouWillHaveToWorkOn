@@ -10,6 +10,12 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
         public StockItem(Session session) : base(session)
         { }
         public string ItemName { get; set; }
+
+        [Association]
+        public XPCollection<StockTransaction> StockTransactions => GetCollection<StockTransaction>(nameof(StockTransactions));
+
+        [Association]
+        public XPCollection<StockBalance> StockBalances => GetCollection<StockBalance>(nameof(StockBalances));
     }
 
 }
