@@ -105,6 +105,9 @@
     <Compile Include="BusinessObjects\ResultExtensions.cs" />
     <Compile Include="BusinessObjects\ServiceRateDiscount.cs" />
     <Compile Include="BusinessObjects\ServiceType.cs" />
+    <Compile Include="BusinessObjects\StockBalance.cs" />
+    <Compile Include="BusinessObjects\StockItem.cs" />
+    <Compile Include="BusinessObjects\StockTransaction.cs" />
     <Compile Include="BusinessObjects\Transaction.cs" />
     <Compile Include="BusinessObjects\TransactionMethods.cs" />
     <Compile Include="BusinessObjects\XPLiteObjectBase.cs" />
