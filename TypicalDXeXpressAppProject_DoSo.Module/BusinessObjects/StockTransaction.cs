@@ -2,6 +2,10 @@
 using System.Linq;
 using DevExpress.Persistent.Base;
 using DevExpress.Xpo;
+using CSharpFunctionalExtensions;
+using static TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects.StockTransactionMethods;
+using static TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects.TransactionMethods;
+
 
 namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
 {
@@ -22,25 +26,31 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
         public decimal Amount { get; set; }
 
         public int TransactionNumberInt { get; set; }
-        public string TransactionNumber { get { return CalculateTransactionNumber(); } }
 
-        private string CalculateTransactionNumber()
+        public string TransactionNumber { get; private set; }
+
+        protected override void OnSaving()
         {
-            var TNumber = Session.Query<StockTransaction>()
-               .Where(t => t.Customer == Customer)
-               .OrderByDescending(t => t.TransactionNumberInt)
-               .Take(1);
-            
-            /*
-             * var lastTransactionV2 = Customer
-               .StockTransactions
-               .OrderByDescending(t => t.TransactionNumberInt)
-               .Take(1); 
-               */
+            base.OnSaving();
+            if (Customer?.StockBalances == null)
+                return;
 
-            string year = DateTime.Now.Year.ToString();
-            string TransactionNumber = string.Concat("ST-", Customer.ID.ToString(), TNumber.ToString(), year);
-            return TransactionNumber;
+            TransactionNumber = CalculateTransactionNumber(Customer, TransactionNumberInt);
+
+            // if Customer is valid, Check StockItem and StockBalance for this customer
+            ValidateCustomer(Customer)
+               .OnSuccess(() => 
+                    ValidateBalance(Customer, StockItem, Session)
+                        .OnSuccess(b => b.Amount += Amount)
+                        .OnFailure(() =>
+                        {
+                            var newItem = new StockBalance(Session)
+                            {
+                                StockItem = StockItem,
+                                Customer = Customer,
+                                Amount = Amount
+                            };
+                        }));
         }
     }
 }

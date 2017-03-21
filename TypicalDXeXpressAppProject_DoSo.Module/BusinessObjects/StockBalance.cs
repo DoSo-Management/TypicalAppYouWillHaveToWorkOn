@@ -1,16 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using DevExpress.Xpo;
-using DevExpress.ExpressApp;
-using System.ComponentModel;
-using DevExpress.ExpressApp.DC;
-using DevExpress.Data.Filtering;
+﻿using DevExpress.Xpo;
 using DevExpress.Persistent.Base;
-using System.Collections.Generic;
-using DevExpress.ExpressApp.Model;
-using DevExpress.Persistent.BaseImpl;
-using DevExpress.Persistent.Validation;
+using CSharpFunctionalExtensions;
+using DevExpress.Data.ODataLinq.Helpers;
+
 
 namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
 {
@@ -27,9 +19,5 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
 
         public decimal Amount { get; set; }
 
-        private decimal CountAmount() {
-
-            return 0;
-        }
     }
 }
