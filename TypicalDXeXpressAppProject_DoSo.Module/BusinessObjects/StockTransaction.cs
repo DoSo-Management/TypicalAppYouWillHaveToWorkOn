@@ -35,8 +35,8 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
             if (Customer?.StockBalances == null)
                 return;
 
+            TransactionNumberInt = GetTransactionNumberInt(Customer, Session);
             TransactionNumber = CalculateTransactionNumber(Customer, TransactionNumberInt);
-
             // if Customer is valid, Check StockItem and StockBalance for this customer
             ValidateCustomer(Customer)
                .OnSuccess(() => 
@@ -50,6 +50,7 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
                                 Customer = Customer,
                                 Amount = Amount
                             };
+                            //Session.CommitTransaction();
                         }));
         }
     }

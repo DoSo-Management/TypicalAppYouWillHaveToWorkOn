@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,18 +42,28 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
             return Result.Ok(count);
         }
 
+        public static int GetTransactionNumberInt(Customer customer, Session session)
+        {
+  
+            if (customer == null) throw new ArgumentNullException(nameof(customer));
+            if (session == null) throw new ArgumentNullException(nameof(session));
+
+            var number = session.QueryInTransaction<StockTransaction>()
+                .Where(t => t.Customer == customer) // Customer.StockTransactions 
+                .OrderByDescending(t => t.TransactionNumberInt)
+                .FirstOrDefault();
+            Debug.Assert(number != null, "number != null");
+            var value = number.TransactionNumberInt;
+            return value;
+        }
+
         public static string CalculateTransactionNumber(Customer customer, int transactionNumberInt)
         {
-            /* var number = Session.Query<StockTransaction>()
-                .Where(t => t.Customer == Customer)  // Customer.StockTransactions 
-                .OrderByDescending(t => t.TransactionNumberInt)
-                .Take(1);
-             */
+            if (customer == null) throw new ArgumentNullException(nameof(customer));
 
             var year = (DateTime.Now.Year % 100).ToString();
             var id = customer.ID.ToString();
-            var num = transactionNumberInt.ToString();
-            var tnumber = "ST-" + id + "-" + num + "-" + year;
+            var tnumber = "ST-" + id + "-" + transactionNumberInt + "-" + year;
             return tnumber;
         }
     }

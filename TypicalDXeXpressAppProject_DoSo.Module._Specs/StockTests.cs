@@ -107,29 +107,52 @@ namespace TypicalDXeXpressAppProject_DoSo.Module._Specs
         {
             var customer = new Customer(Uow) { ID = 0, DateOfBirth = new DateTime(1990, 1, 1) };
             var customer2 = new Customer(Uow) { ID = 1, DateOfBirth = new DateTime(1996, 1, 1) };
+            var customer3 = new Customer(Uow) { ID = 2, DateOfBirth = new DateTime(1999, 1, 1) };
+
             var item = new StockItem(Uow) { ItemName = "test_item" }; 
 
             var transaction = new StockTransaction(Uow) { DateOfTransaction = DateTime.Now, StockItem = item, Customer = customer,
-                Amount = 100, TransactionNumberInt = 1};
+                Amount = 100};
 
-            var transaction2 = new StockTransaction(Uow) { DateOfTransaction = DateTime.Now, StockItem = item, Customer = customer2,
-                Amount = 100, TransactionNumberInt = 2};
+            var transaction01 = new StockTransaction(Uow)
+            {
+                DateOfTransaction = DateTime.Now,
+                StockItem = item,
+                Customer = customer,
+                Amount = 22
+            };
+            
+            var transaction2 = new StockTransaction(Uow) { DateOfTransaction = DateTime.Now, StockItem = item, Customer = customer3,
+                Amount = 100};
             Uow.CommitChanges();
 
-            CalculateTransactionNumber(customer, 1).ShouldBe("ST-1-1-17");
+            CalculateTransactionNumber(customer, 2).ShouldBe("ST-1-2-17");
 
             transaction.TransactionNumber.ShouldBe("ST-0-1-17");
-            transaction2.TransactionNumber.ShouldBe("ST-1-2-17");
+            transaction01.TransactionNumber.ShouldBe("ST-0-2-17");
+            transaction2.TransactionNumber.ShouldBe("ST-2-1-17");
         }
 
         /// <summary>
         /// Customer should have a collection of StockItemBalances which should be updated or created based on the StockTransactions taking place.
         /// Thus, if you create a new StockTransaction, you should see if StockItemBalance exists for this StockItem for this Customer, create if it doesn't and update if it does.
         /// </summary>
-     //   [Fact]
+        [Fact]
         public void StockItemBalance_should_be_ADDED_to_customer_if_it_doesnt_exist()
         {
-            FailMiserably();
+            var customer = new Customer(Uow) { DateOfBirth = new DateTime(1990, 1, 1) };
+            var item = new StockItem(Uow) { ItemName = "test_item" };
+
+            var transaction0 = new StockTransaction(Uow)
+            {
+                DateOfTransaction = new DateTime(2012, 6, 10),
+                StockItem = item,
+                Customer = customer,
+                Amount = 33
+            };
+            
+            Uow.CommitChanges();
+
         }
        // [Fact]
         public void StockItemBalance_should_be_UPDATED_if_it_exists_for_customer()
