@@ -7,6 +7,8 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
     public class StockItem : XPLiteObjectBase
     {
         // now update line 9
+
+        //hotfix N1
         public StockItem(Session session) : base(session)
         { }
         public string ItemName { get; set; }
