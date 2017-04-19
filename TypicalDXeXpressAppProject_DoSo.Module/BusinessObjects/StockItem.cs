@@ -20,4 +20,5 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
         public XPCollection<StockBalance> StockBalances => GetCollection<StockBalance>(nameof(StockBalances));
     }
     test1
+     test2
 }
