@@ -45,6 +45,10 @@ namespace TypicalDXeXpressAppProject_DoSo.Module.BusinessObjects
         public XPCollection<Invoice> Invoices => GetCollection<Invoice>(nameof(Invoices));
         [Association]
         public XPCollection<ServiceRateDiscount> ServiceRateDiscounts => GetCollection<ServiceRateDiscount>(nameof(ServiceRateDiscounts));
+        [Association]
+        public XPCollection<StockTransaction> StockTransactions => GetCollection<StockTransaction>(nameof(StockTransactions));
+        [Association]
+        public XPCollection<StockBalance> StockBalances => GetCollection<StockBalance>(nameof(StockBalances));
 
         protected override void OnSaving()
         {
